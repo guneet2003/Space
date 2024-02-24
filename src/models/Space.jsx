@@ -1,14 +1,13 @@
-import React, { useRef, useEffect, useState} from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import {a} from "@react-spring/three";
+import { a } from "@react-spring/three";
 import space from '../assets/space.glb'
 
-const Space = ({isRotating, setIsRotating,setCurrentStage, ...props}) => {
-    const SpaceRef = useRef();
-   
+const Space = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
+  const SpaceRef = useRef();
 
-  const {gl, viewport} = useThree();
+  const { gl, viewport } = useThree();
   const lastX = useRef(0);
   const rotationSpeed = useRef(0);
   const dampingFactor = 0.95;
@@ -17,55 +16,50 @@ const Space = ({isRotating, setIsRotating,setCurrentStage, ...props}) => {
     e.stopPropagation();
     e.preventDefault();
     setIsRotating(true);
-    const clientX = e.touches? e.touches[0].clientX : e.clientX;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
 
-    lastX.current= clientX;
+    lastX.current = clientX;
   }
+
   const handlePointerUp = (e) => {
     e.stopPropagation();
     e.preventDefault();
     setIsRotating(false);
   }
+
   const handlePointerMove = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    if(isRotating){
-      
-    const clientX = e.touches? e.touches[0].clientX : e.clientX;
+    if (isRotating) {
 
-    const delta = (clientX - lastX.current) / viewport.width;
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
 
-    SpaceRef.current.rotation.y += delta*0.01*Math.PI;
+      const delta = (clientX - lastX.current) / viewport.width;
 
-    lastX.current = clientX;
+      SpaceRef.current.rotation.y += delta * 0.01 * Math.PI;
 
-    rotationSpeed.current = delta*0.01*Math.PI;
-}
+      lastX.current = clientX;
 
-  }
-
-  const handleKeyDown = (e) => {
-    if(e.key === 'ArrowLeft'){
-      if(!isRotating) setIsRotating(true);
-      SpaceRef.current.rotation.y += 0.01 * Math.PI;
-      rotationSpeed.current = 0.007;
-    } else if(e.key === 'ArrowRight'){
-      if(!isRotating) setIsRotating(true);
-      SpaceRef.current.rotation.y -= 0.01 * Math.PI;
-      rotationSpeed.current = -0.007;
+      rotationSpeed.current = delta * 0.01 * Math.PI;
     }
   }
 
-  const handleKeyUp = (e) => {
-    if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
-      setIsRotating(false);
-    }
+  const handleTouchStart = (e) => {
+    handlePointerDown(e);
+  }
+
+  const handleTouchMove = (e) => {
+    handlePointerMove(e);
+  }
+
+  const handleTouchEnd = (e) => {
+    handlePointerUp(e);
   }
 
   useFrame(() => {
     if (!isRotating) {
       rotationSpeed.current *= dampingFactor;
-  
+
       if (Math.abs(rotationSpeed.current) < 0.001) {
         rotationSpeed.current = 0;
       }
@@ -74,7 +68,7 @@ const Space = ({isRotating, setIsRotating,setCurrentStage, ...props}) => {
       const rotation = SpaceRef.current.rotation.y;
       const normalizedRotation =
         ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-  
+
       // Set the current stage based on the island's orientation
       switch (true) {
         case normalizedRotation >= 0 && normalizedRotation < Math.PI / 2:
@@ -94,25 +88,26 @@ const Space = ({isRotating, setIsRotating,setCurrentStage, ...props}) => {
       }
     }
   });
-  
- 
+
   useEffect(() => {
-      const canvas = gl.domElement;
+    const canvas = gl.domElement;
 
-      canvas.addEventListener('pointerup', handlePointerUp);
-      canvas.addEventListener('pointerdown', handlePointerDown);
-      canvas.addEventListener('pointermove', handlePointerMove);
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('keyup', handleKeyUp);
+    canvas.addEventListener('pointerup', handlePointerUp);
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    canvas.addEventListener('pointermove', handlePointerMove);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchend', handleTouchEnd);
 
-      return () => {
-        canvas.removeEventListener('pointerup', handlePointerUp);
-        canvas.removeEventListener('pointerdown', handlePointerDown);
-        canvas.removeEventListener('pointermove', handlePointerMove);
-        document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('keyup', handleKeyUp); 
-      }
-  },[gl, handlePointerDown,handlePointerUp, handlePointerMove])
+    return () => {
+      canvas.removeEventListener('pointerup', handlePointerUp);
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      canvas.removeEventListener('pointermove', handlePointerMove);
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    }
+  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove, handleTouchStart, handleTouchMove, handleTouchEnd]);
 
   const { nodes, materials } = useGLTF(space);
   return (
