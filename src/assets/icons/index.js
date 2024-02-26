@@ -26,9 +26,11 @@ import arrow from './arrow.svg'
 import contact from './contact.svg'
 import soundon from './soundon.png'
 import soundoff from './soundoff.png'
+import spine from './spine.png'
 
 export {
     css,
+    spine,
     express,
     git,
     github,

@@ -3,6 +3,8 @@ import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timel
 import 'react-vertical-timeline-component/style.min.css';
 import CTA from "../components/CTA";
 
+import Footer from "../components/Footer"
+
 const About = () => {
   return (
     <section className="max-w-5xl mx-auto sm:p-16 pb-12 !pt-[126px] px-8 bg-transparent min-h-screen">
@@ -14,9 +16,9 @@ const About = () => {
       </div>
       <div className="py-10 flex flex-col text-white">
         <h3 className="subhead-text">My Skills </h3>
-        <div className="mt-16 flex flex-wrap gap-12">
+        <div className="mt-16 flex flex-wrap justify-center gap-12">
           {skills.map((skill, index) => (
-            <div key={index} className="block-container w-20 h-20 ">
+            <div key={index} className="block-container flex justify-center w-20 h-20 ">
               <div className="btn-back rounded-xl" />
               <div className="btn-front rounded-xl flex justify-center items-center">
                 <img 
@@ -33,6 +35,7 @@ const About = () => {
    
 <hr className="border-gray-500" />
               <CTA />
+              <Footer />
     </section>
   );
 }

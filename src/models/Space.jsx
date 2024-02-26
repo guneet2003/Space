@@ -20,11 +20,13 @@ const Space = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 
     lastX.current = clientX;
   }
+
   const handlePointerUp = (e) => {
     e.stopPropagation();
     e.preventDefault();
     setIsRotating(false);
   }
+
   const handlePointerMove = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -40,38 +42,36 @@ const Space = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 
       rotationSpeed.current = delta * 0.01 * Math.PI;
     }
+  }
 
+  const handleTouchStart = (e) => {
+    handlePointerDown(e);
+  }
+
+  const handleTouchMove = (e) => {
+    handlePointerMove(e);
+  }
+
+  const handleTouchEnd = (e) => {
+    handlePointerUp(e);
   }
 
   const handleKeyDown = (e) => {
-    if (e.key === 'ArrowLeft') {
-      if (!isRotating) setIsRotating(true);
+    if(e.key === 'ArrowLeft'){
+      if(!isRotating) setIsRotating(true);
       SpaceRef.current.rotation.y += 0.01 * Math.PI;
       rotationSpeed.current = 0.007;
-    } else if (e.key === 'ArrowRight') {
-      if (!isRotating) setIsRotating(true);
+    } else if(e.key === 'ArrowRight'){
+      if(!isRotating) setIsRotating(true);
       SpaceRef.current.rotation.y -= 0.01 * Math.PI;
       rotationSpeed.current = -0.007;
     }
   }
 
   const handleKeyUp = (e) => {
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
       setIsRotating(false);
     }
-  }
-
-  const handleWheel = (e) => {
-    if (e.deltaY > 0) {
-      // Scrolling down
-      SpaceRef.current.rotation.y += 0.01 * Math.PI;
-      rotationSpeed.current = 0.007;
-    } else {
-      // Scrolling up
-      SpaceRef.current.rotation.y -= 0.01 * Math.PI;
-      rotationSpeed.current = -0.007;
-    }
-    setIsRotating(true);
   }
 
   useFrame(() => {
@@ -107,26 +107,29 @@ const Space = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     }
   });
 
-
   useEffect(() => {
     const canvas = gl.domElement;
 
     canvas.addEventListener('pointerup', handlePointerUp);
     canvas.addEventListener('pointerdown', handlePointerDown);
     canvas.addEventListener('pointermove', handlePointerMove);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchend', handleTouchEnd);
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
-    canvas.addEventListener('wheel', handleWheel);
 
     return () => {
       canvas.removeEventListener('pointerup', handlePointerUp);
       canvas.removeEventListener('pointerdown', handlePointerDown);
       canvas.removeEventListener('pointermove', handlePointerMove);
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
       document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('keyup', handleKeyUp);
-      canvas.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('keyup', handleKeyUp); 
     }
-  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove, handleWheel])
+  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove, handleTouchStart, handleTouchMove, handleTouchEnd]);
 
   const { nodes, materials } = useGLTF(space);
   return (

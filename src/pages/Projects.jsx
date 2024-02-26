@@ -3,6 +3,7 @@
  import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import CTA from "../components/CTA";
+import Footer from "../components/Footer";
 
 const Projects = () => {
   return (
@@ -11,12 +12,12 @@ const Projects = () => {
 <div className="head-text text-white">A curated collection of <span className="bg-[#71f487] bg-clip-text text-transparent font-bold">Projects</span></div>
       <div className="mt-5 flex flex-col gap-3 text-gray-300">
         <p>
-        Specializing in web development and passionate about crafting 2D game animations using Spine 2D, I bring a blend of leadership experience from an Edtech startup and hands-on expertise in the MERN stack through the project MindSpace. This positions me for success in the realms of web development and 2D animation, reflecting my commitment to excellence in both fields.
+          I've honed my skills through various projects, including backend development for Mindspace, an app offering spiritual solutions for mental health, frontend development for Coders Point, an e-learning platform, and captivating animations as a Spine 2D Animator, bringing digital media projects to life with fluid movement and expressive gestures.
         </p>
       </div>
    
    <div className="py-16">
-      <h3 className="subhead-text">Work Experience</h3>
+      <h3 className="subhead-text text-white">Work Experience</h3>
       <div className="mt-5 flex flex-col gap-3 text-gray-300">
         <p>
           Worked on many projects, levelling up my skills. Some are listed below:
@@ -67,6 +68,7 @@ const Projects = () => {
     </div>
     <hr className="border-gray-500" />
     <CTA isProjectsPage={true} />
+    <Footer />
     </section>
   )
 }

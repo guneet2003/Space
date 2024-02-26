@@ -89,6 +89,8 @@ const Home = () => {
 
 
       </Canvas>
+
+      
       
     </section>
   )

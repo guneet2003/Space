@@ -16,7 +16,7 @@ const HomeInfo = ({ currentStage }) => {
         fontSize: isSmallScreen ? '1rem' : '1.2rem', // Adjust font size based on screen size
       }}>
         My name is  
-        <span className='font-semibold mx-2 text-white'> Guneet Singh. </span>
+        <span className='font-semibold mx-2 text-white'>Guneet Singh. </span>
         <br />
         Web Developer, UI Designer & Spine Animator.
       </h1>

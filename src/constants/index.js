@@ -10,20 +10,16 @@ import {
     javascript,
     linkedin,
     mongodb,
-    
-    mui,
-    nextjs,
     nodejs,
     pricewise,
     react,
     redux,
     sass,
     snapgram,
-    // spine,
     summiz,
     tailwindcss,
     threads,
-    typescript
+    spine,
 } from "../assets/icons";
 
 export const skills = [
@@ -32,6 +28,14 @@ export const skills = [
         imageUrl: react,
         name: "React",
         type: "Frontend",
+    },
+
+    {
+        imageUrl: spine,
+        name: "Spine 2d",
+        type: "Animation",
+
+        
     },
     
     {
@@ -118,7 +122,7 @@ export const experiences = [
         // icon: shopify,
         iconBg: "#b7e4c7",
         points: [
-            "specialized in creating captivating animations for digital media projects, I excel in interpreting storyboards and rigging characters. With expertise in keyframe animation, I bring static images to life with fluid movement and expressive gestures. Collaborative teamwork ensures consistency and quality throughout production, while overcoming technical challenges is a source of pride in crafting immersive experiences that captivate audiences.",
+            "Specialized in creating captivating animations for digital media projects, I excel in interpreting storyboards and rigging characters. With expertise in keyframe animation, I bring static images to life with fluid movement and expressive gestures. Collaborative teamwork ensures consistency and quality throughout production, while overcoming technical challenges is a source of pride in crafting immersive experiences that captivate audiences.",
         ],
     },
     // {
@@ -137,11 +141,11 @@ export const experiences = [
 ];
 
 export const socialLinks = [
-    {
-        name: 'Contact',
-        iconUrl: contact,
-        link: '/contact',
-    },
+    // {
+    //     name: 'Contact',
+    //     iconUrl: contact,
+    //     link: '/contact',
+    // },
     {
         name: 'GitHub',
         iconUrl: github,
