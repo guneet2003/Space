@@ -67,7 +67,7 @@ const Contact = () => {
   }, []); // Call the effect only once on component mount
 
   return (
-    <div className="relative flex flex-col max-w-screen mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-w-screen min-h-screen overflow-hidden">
+    <div className="relative flex flex-col max-w-screen mx-auto sm:p-16 pb-12 !pt-[126px] px-8  min-h-screen overflow-hidden">
       <div className="flex justify-center z-10">
         {alert.show && <Alert {...alert} />}
         <div className="flex-1 flex flex-col justify-center max-w-5xl">
