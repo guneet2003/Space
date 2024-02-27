@@ -66,14 +66,24 @@ const Contact = () => {
     return () => clearInterval(flickerInterval);
   }, []); // Call the effect only once on component mount
 
+  useEffect(() => {
+    // Set overflow to hidden only when alert is shown
+    document.body.style.overflow = alert.show ? 'hidden' : 'auto';
+
+    // Clean up function to reset overflow when component unmounts or alert is hidden
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [alert.show]); // Update effect whenever alert.show changes
+
   return (
-    <div className="relative flex flex-col max-w-screen mx-auto sm:p-16 pb-12 !pt-[126px] px-8  min-h-screen overflow-hidden">
+    <div className="relative flex flex-col max-w-screen mx-auto sm:p-16 pb-12 !pt-[126px] px-8 min-h-screen">
       <div className="flex justify-center z-10">
         {alert.show && <Alert {...alert} />}
-        <div className="flex-1 flex flex-col justify-center max-w-5xl">
+        <div className="flex-1 flex flex-col justify-center max-w-4xl">
           <h1 className="head-text text-[#4e9dd2]">Let's Connect</h1>
           <form
-            className="w-full flex flex-col gap-7 mt-14"
+            className="w-full flex flex-col gap-3 mt-14"
             autoComplete="on"
             ref={formRef}
             onSubmit={handleSubmit}
